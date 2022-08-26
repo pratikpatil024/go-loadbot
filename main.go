@@ -6,12 +6,10 @@ package main
 import (
 	"context"
 	"crypto/ecdsa"
-	"crypto/rand"
 	"fmt"
 	"log"
 	"math/big"
 	"os"
-	"path/filepath"
 	"strconv"
 	"sync"
 	"time"
@@ -159,7 +157,7 @@ func main1() {
 		fundAccounts(ctx, cl, generatedAccounts, chainID, add, ksOpts)
 	}
 
-	INITIAL_SIZE = checkChainData()
+	// INITIAL_SIZE = checkChainData()
 
 	fmt.Println("Preparing")
 	if fund == "true" {
@@ -218,7 +216,7 @@ func runTransaction(ctx context.Context, Clients *ethclient.Client, recipient co
 	var data []byte
 	gasLimit := uint64(21000)
 
-	gasPrice := big.NewInt(1000000000)
+	gasPrice := big.NewInt(100000000000)
 
 	val := big.NewInt(value)
 
@@ -302,14 +300,14 @@ func startLoadbot(ctx context.Context, client *ethclient.Client, chainID *big.In
 				os.Exit(0)
 			}
 
-			// checkChainDataByScript()
-			if MAX_SIZE > 0 {
-				currentSize := checkChainData()
-				if (currentSize - INITIAL_SIZE) > int64(MAX_SIZE) {
-					fmt.Println("Size limit reached!!!")
-					os.Exit(0)
-				}
-			}
+			// // checkChainDataByScript()
+			// if MAX_SIZE > 0 {
+			// 	currentSize := checkChainData()
+			// 	if (currentSize - INITIAL_SIZE) > int64(MAX_SIZE) {
+			// 		fmt.Println("Size limit reached!!!")
+			// 		os.Exit(0)
+			// 	}
+			// }
 
 			recpIdx++
 			sendIdx++
@@ -369,40 +367,42 @@ func startLoadbot(ctx context.Context, client *ethclient.Client, chainID *big.In
 	}
 }
 
-func genRandomGas(min int64, max int64) *big.Int {
-	bg := big.NewInt(max - min)
+// func genRandomGas(min int64, max int64) *big.Int {
+// 	bg := big.NewInt(max - min)
 
-	n, err := rand.Int(rand.Reader, bg)
-	if err != nil {
-		panic(err)
-	}
+// 	n, err := rand.Int(rand.Reader, bg)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	return big.NewInt(n.Int64() + min)
-}
+// 	return big.NewInt(n.Int64() + min)
+// }
 
 func runBotTransaction(ctx context.Context, Clients *ethclient.Client, recipient common.Address, chainID *big.Int,
 	sender Account, nonce uint64, value int64) error {
 
 	var data []byte
 	gasLimit := uint64(21000)
-	var gasPrice *big.Int
+	// var gasPrice *big.Int
 
-	r := nonce % 6
-	switch r {
-	case 0:
-		gasPrice = genRandomGas(32000, 34000)
-	case 1:
-		gasPrice = genRandomGas(22000, 24000)
-	case 2:
-		gasPrice = genRandomGas(28000, 30000)
-	case 3:
-		gasPrice = genRandomGas(26000, 28000)
-	case 4:
-		gasPrice = genRandomGas(20000, 24000)
-	case 5:
-		gasPrice = genRandomGas(30000, 32000)
+	// r := nonce % 6
+	// switch r {
+	// case 0:
+	// 	gasPrice = genRandomGas(3200000, 3400000)
+	// case 1:
+	// 	gasPrice = genRandomGas(2200000, 2400000)
+	// case 2:
+	// 	gasPrice = genRandomGas(2800000, 3000000)
+	// case 3:
+	// 	gasPrice = genRandomGas(2600000, 2800000)
+	// case 4:
+	// 	gasPrice = genRandomGas(2000000, 2400000)
+	// case 5:
+	// 	gasPrice = genRandomGas(3000000, 3200000)
 
-	}
+	// }
+
+	gasPrice := big.NewInt(100000000000)
 
 	val := big.NewInt(value)
 
@@ -430,23 +430,23 @@ func runBotTransaction(ctx context.Context, Clients *ethclient.Client, recipient
 	return err
 }
 
-func checkChainData() int64 {
-	var size int64
-	err := filepath.Walk(DATA_PATH, func(_ string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			size += info.Size()
-		}
-		return err
-	})
+// func checkChainData() int64 {
+// 	var size int64
+// 	err := filepath.Walk(DATA_PATH, func(_ string, info os.FileInfo, err error) error {
+// 		if err != nil {
+// 			return err
+// 		}
+// 		if !info.IsDir() {
+// 			size += info.Size()
+// 		}
+// 		return err
+// 	})
 
-	if err != nil {
-		fmt.Println("Error in getting chaindata size: ", err)
-		os.Exit(0)
-	}
-	fmt.Print("chaindata size: ", size/1024, "KB\n\n") // Originally the size is in returned in bytes
+// 	if err != nil {
+// 		fmt.Println("Error in getting chaindata size: ", err)
+// 		os.Exit(0)
+// 	}
+// 	fmt.Print("chaindata size: ", size/1024, "KB\n\n") // Originally the size is in returned in bytes
 
-	return size / 1024
-}
+// 	return size / 1024
+// }
