@@ -318,42 +318,42 @@ func startLoadbot(ctx context.Context, client *ethclient.Client, chainID *big.In
 				recpointer := createAccount()
 				recipient := recpointer.addr
 
-				// recpointer2 := createAccount()
-				// recipient2 := recpointer2.addr
+				recpointer2 := createAccount()
+				recipient2 := recpointer2.addr
 
-				// recpointer3 := createAccount()
-				// recipient3 := recpointer3.addr
+				recpointer3 := createAccount()
+				recipient3 := recpointer3.addr
 
-				// recpointer4 := createAccount()
-				// recipient4 := recpointer4.addr
+				recpointer4 := createAccount()
+				recipient4 := recpointer4.addr
 
-				// recpointer5 := createAccount()
-				// recipient5 := recpointer5.addr
+				recpointer5 := createAccount()
+				recipient5 := recpointer5.addr
 
 				err := runBotTransaction(ctx, client, recipient, chainID, sender, nonce, 1)
 				if err != nil {
 					return err
 				}
 
-				// err = runBotTransaction(ctx, client, recipient2, chainID, sender, nonce+1, 1)
-				// if err != nil {
-				// 	return err
-				// }
+				err = runBotTransaction(ctx, client, recipient2, chainID, sender, nonce+1, 1)
+				if err != nil {
+					return err
+				}
 
-				// err = runBotTransaction(ctx, client, recipient3, chainID, sender, nonce+2, 1)
-				// if err != nil {
-				// 	return err
-				// }
+				err = runBotTransaction(ctx, client, recipient3, chainID, sender, nonce+2, 1)
+				if err != nil {
+					return err
+				}
 
-				// err = runBotTransaction(ctx, client, recipient4, chainID, sender, nonce+3, 1)
-				// if err != nil {
-				// 	return err
-				// }
+				err = runBotTransaction(ctx, client, recipient4, chainID, sender, nonce+3, 1)
+				if err != nil {
+					return err
+				}
 
-				// err = runBotTransaction(ctx, client, recipient5, chainID, sender, nonce+4, 1)
-				// if err != nil {
-				// 	return err
-				// }
+				err = runBotTransaction(ctx, client, recipient5, chainID, sender, nonce+4, 1)
+				if err != nil {
+					return err
+				}
 
 				return nil
 
