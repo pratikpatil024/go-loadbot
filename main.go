@@ -205,7 +205,7 @@ func fundAccounts(ctx context.Context, client *ethclient.Client, genAccounts Acc
 	senderAddress common.Address, opts *bind.TransactOpts) {
 	for i := 0; i < N; i++ {
 		fmt.Println("Reqd nonce: ", Nonce+uint64(i))
-		runTransaction(ctx, client, genAccounts[i].addr, chainID, senderAddress, opts, Nonce+uint64(i), 10000000000000000)
+		runTransaction(ctx, client, genAccounts[i].addr, chainID, senderAddress, opts, Nonce+uint64(i), 1000000000000000000)
 	}
 }
 
